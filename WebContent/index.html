@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/Article">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://use.fontawesome.com/0eaf729d38.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+<title>SalStocks: Home</title>
+</head>
+<body>
+	<nav id="navigator" class="navbar level">
+		<div class="navbar-brand nav">
+			<div class="level-left"><strong><span style="color:white">SalStocks</span></strong></div>
+		</div>
+		<div class="navbar-end">
+	        <div class="buttons">
+		          <a id="hs_btn" class="button" style="background-color:#6100FF;">
+		          	Home/Search
+		          </a>
+		          <a id="ls_btn" class="button" style="background-color:#6100FF;"
+		          	onclick="window.location.href='loginsignup.html';">
+		        	Login/Signup
+		      	  </a>
+	        </div>
+       </div>
+	</nav>
+	<nav id="navigator_user" class="navbar level hidden">
+		<div class="navbar-brand nav">
+			<div class="level-left"><strong><span style="color:white">SalStocks</span></strong></div>
+		</div>
+		<div class="navbar-end">
+	        <div class="buttons">
+		          <a id="user_hs_btn" class="button" style="background-color:#6100FF;">
+		          	Home/Search
+		          </a>
+		          <a id="user_f_btn" class="button" style="background-color:#6100FF;"
+		          	onclick="window.location.href='favorites.html';">
+		        	Favorites
+		      	  </a>
+		      	  <a id="user_p_btn" class="button" style="background-color:#6100FF;"
+		          	onclick="window.location.href='portfolio.html';">
+		        	Portfolio
+		      	  </a>
+		      	  <a id="user_lo_btn" class="button" style="background-color:#6100FF;"
+		          	onclick="window.location.href='index.html'; window.localStorage.clear(); deleteCookies();">
+		        	Logout
+		      	  </a>
+	        </div>
+       </div>
+	</nav>
+	<div id="master" class="container">
+		<div class="columns">
+			<div class="column"></div>
+			<div class="logo column is-two-fifths is-centered">
+				<h1> Stock Search </h1>
+				<form id="searchform" class="form-group fg--search">
+					<input id="searchticker" class="searchbox" type=text name="ticker" placeholder="Enter stock ticker">
+					<button type="button" class="fas fa-search search" onclick="searchComp()"></button>
+				</form>
+			</div>
+			<div class="column"></div>
+		</div>
+		<div id="result_contain" class="columns hidden" style="margin-top:150px;">
+			<div class="column is-1"></div>
+			<div class="column">
+				<div class="columns">
+					<div class="column is-pulled-left"><span id="result_ticker"style="font-size:x-large; font-weight:700;"></span>
+						<button id="star" type="button" onmouseover="favoritehover()" onmouseout="favoriteleave()" 
+						onclick="favorited();" class="far fa-star-o star"></button>
+					</div>
+					<div class="column is-pulled-right">
+						<span id="request_last" style="font-size:x-large; font-weight:700;float:right;"></span>
+					</div>
+				</div>
+				<div class="columns">
+					<div class="column is-pulled-left">
+						<span id="result_name" style="font-size:large; font-weight:500;"></span>
+					</div>
+					<div class="column is-pulled-right">
+						<span id="request_change" style="font-size:large; font-weight:500;float:right;"></span>
+					</div>
+				</div>
+				<div class="columns">
+					<div class="column is-pulled-left">
+						<p id="result_exchange"></p>
+					</div> 
+					<div class="column has-text-right">
+						<p id="current_timestamp"></p>
+					</div>
+				</div>
+				<div class="columns">
+					<div id="quant_buy" class="column is-pulled-left form-group level">
+						<label class="level-item level-left">Quantity: 
+							<input id="buy_quantity" type="number" name="quantity" min="1">
+						<button id="buy_btn" onclick="purchase();" class="button is-success">Buy</button>
+						</label>
+					</div>
+				</div>
+				<div id="mark" class="columns">
+					<div class="column has-text-centered">
+						<h5>Market<span id="market"></span></h5>
+					</div>
+				</div>
+				<div id="sum" class="columns">
+					<div class="column has-text-centered">
+						<p>Summary</p>
+					</div>
+				</div>
+				<hr style="border: solid 1px #6100FF;">
+				<div class="columns">
+					<div class="column is-one-half">
+						<p style="float:left">High Price:</p>
+						<p id="request_high" style="float:right"></p>
+					</div>
+					<div class="column is-one-half right_prices">
+						<p style="float:left">Mid Price:</p>
+						<p id="request_mid" style="float:right"></p>
+					</div>
+				</div>
+				<div class="columns">
+					<div class="column is-one-half">
+						<p style="float:left">Low Price:</p>
+						<p id="request_low" style="float:right"></p>
+					</div>
+					<div class="column is-one-half right_prices">
+						<p style="float:left">Ask Price:</p>
+						<p id="request_ap" style="float:right"></p>
+					</div>
+				</div>
+				<div class="columns">
+					<div class="column is-one-half">
+						<p style="float:left">Open Price:</p>
+						<p id="request_op"style="float:right"></p>
+					</div>
+					<div class="column is-one-half right_prices">
+						<p style="float:left">Ask Size:</p>
+						<p id="request_as" style="float:right"></p>
+					</div>
+				</div>
+				<div class="columns">
+					<div class="column is-one-half">
+						<p style="float:left">Prev. Close:</p>
+						<p id="request_pc" style="float:right"></p>
+					</div>
+					<div class="column is-one-half right_prices">
+						<p style="float:left">Bid Price:</p>
+						<p id="request_bp" style="float:right"></p>
+					</div>
+				</div>
+				<div class="columns">
+					<div class="column is-one-half">
+						<p style="float:left">Volume:</p>
+						<p id="request_volume"style="float:right"></p>
+					</div>
+					<div class="column is-one-half right_prices">
+						<p style="float:left">Bid Size:</p>
+						<p id="request_bs" style="float:right"></p>
+					</div>
+				</div>
+				<div class="column has-text-centered">
+					<span style="font-size:large;font-weight:500;">Company's Description </span>
+				</div>
+				<div class="column has-text-left">
+					<p id="result_start"></p>
+				</div>
+				<div class="column">
+					<p id="result_description"></p>
+				</div>
+				
+			</div>
+			<div class="column is-1"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="navbar.js"></script>
+	<script type="text/javascript" src="searchcompany.js"></script>
+</body>
+</html>
